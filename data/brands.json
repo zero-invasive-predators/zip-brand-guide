@@ -1,0 +1,96 @@
+{
+  "brands": [
+    {
+      "id": "zip",
+      "name": "Zero Invasive Predators",
+      "abbr": "ZIP",
+      "colors": [
+        {
+          "name": "Primary",
+          "hex": "#3abeac"
+        },
+        {
+          "name": "Secondary",
+          "hex": "#008aab"
+        },
+        {
+          "name": "Tertiary",
+          "hex": "#00c08b"
+        },
+        {
+          "name": "Dark",
+          "hex": "#005159"
+        }
+      ]
+    },
+    {
+      "id": "pfsw",
+      "name": "Predator Free South Westland",
+      "abbr": "PFSW",
+      "colors": [
+        {
+          "name": "Primary",
+          "hex": "#AD3905"
+        },
+        {
+          "name": "Secondary",
+          "hex": "#27AFC5"
+        },
+        {
+          "name": "Black",
+          "hex": "#343430"
+        }
+      ]
+    },
+    {
+      "id": "tmap",
+      "name": "Te Manahuna Aoraki Project",
+      "abbr": "TMAP",
+      "colors": [
+        {
+          "name": "Primary",
+          "hex": "#ffc964"
+        },
+        {
+          "name": "Secondary",
+          "hex": "#7ec8f2"
+        },
+        {
+          "name": "Black",
+          "hex": "#000000"
+        }
+      ]
+    },
+    {
+      "id": "pfr",
+      "name": "Predator Free Rakiura",
+      "abbr": "PFR",
+      "colors": [
+        {
+          "name": "Dark green",
+          "hex": "#415927"
+        },
+        {
+          "name": "Kākāpō green",
+          "hex": "#9ac13c"
+        },
+        {
+          "name": "Lime green",
+          "hex": "#ccdc44"
+        },
+        {
+          "name": "Purple",
+          "hex": "#413541"
+        },
+        {
+          "name": "Glowing yellow",
+          "hex": "#fbb040"
+        },
+        {
+          "name": "Glowing orange",
+          "hex": "#f15a29"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZIP Brand Assets</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Brand Assets</h1>
+    <p class="subtitle">Zero Invasive Predators &amp; sub-brands</p>
+  </header>
+
+  <main id="brands-container">
+    <p class="loading">Loading…</p>
+  </main>
+
+  <!-- Add colour modal -->
+  <dialog id="color-modal">
+    <form id="color-form" method="dialog">
+      <h2 id="modal-title">Add colour</h2>
+      <div class="field">
+        <label for="color-name">Name</label>
+        <input type="text" id="color-name" placeholder="e.g. Primary" required autocomplete="off">
+      </div>
+      <div class="field color-field">
+        <label for="color-hex">Hex</label>
+        <div class="color-input-group">
+          <input type="color" id="color-picker" aria-label="Colour picker">
+          <input type="text" id="color-hex" placeholder="#000000" pattern="^#[0-9a-fA-F]{6}$" required autocomplete="off">
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" id="modal-cancel" class="btn-ghost">Cancel</button>
+        <button type="submit" id="modal-submit" class="btn-primary">Add colour</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="main.js"></script>
+</body>
+</html>
