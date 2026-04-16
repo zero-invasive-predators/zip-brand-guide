@@ -14,12 +14,20 @@
           "hex": "#008aab"
         },
         {
-          "name": "Tertiary",
-          "hex": "#00c08b"
+          "name": "Waxgill green",
+          "hex": "#98d666"
         },
         {
           "name": "Dark",
           "hex": "#005159"
+        },
+        {
+          "name": "Black",
+          "hex": "#1b2223"
+        },
+        {
+          "name": "White",
+          "hex": "#ffffff"
         }
       ]
     },

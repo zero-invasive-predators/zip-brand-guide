@@ -63,45 +63,52 @@ function oklchToOKLAB([L, C, H]) {
 
 // Generate an 11-stop tint/shade scale using OKLCH, pinning the source
 // colour as the canonical stop and distributing others around it.
+// Lightness stops are derived from Tailwind Teal OKLCH values, giving tighter
+// clustering in the lights and more spread in the darks (600–950).
+// Chroma uses a power curve: 0.3 on the light side (gentle steps at 50–200)
+// and 0.8 on the dark side (retains richness through 700–900).
 function generateScale(hex) {
   const lab = hexToOKLAB(hex);
   const [L, C, H] = oklabToOKLCH(lab);
 
   const steps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
-  // Reference lightness values used only to find the nearest canonical step
-  const refLightness = [0.97, 0.93, 0.86, 0.76, 0.64, 0.50, 0.38, 0.27, 0.18, 0.11, 0.07];
+  // Tailwind Teal-derived OKLCH lightness values, normalised to [0.12, 0.98]
+  const standardLightness = [0.98, 0.9423, 0.8904, 0.8233, 0.7376, 0.6393, 0.5132, 0.4045, 0.3145, 0.2525, 0.12];
 
   // Find which step index the source lightness sits closest to
-  const canonicalIdx = refLightness.reduce((best, l, i) =>
-    Math.abs(l - L) < Math.abs(refLightness[best] - L) ? i : best, 0);
+  const canonicalIdx = standardLightness.reduce((best, l, i) =>
+    Math.abs(l - L) < Math.abs(standardLightness[best] - L) ? i : best, 0);
 
-  const lighterStops = canonicalIdx; // number of stops above canonical
-  const darkerStops  = steps.length - 1 - canonicalIdx; // stops below
-
-  const lightEnd = 0.97;
-  const darkEnd  = 0.07;
-
-  function chromaAt(targetL) {
-    // Gently reduce chroma at extremes to avoid over-saturation
-    const chromaScale = 1 - Math.pow(Math.abs(targetL - 0.5) * 1.6, 2) * 0.3;
-    return C * Math.max(0, chromaScale);
-  }
+  const matchedStandardL = standardLightness[canonicalIdx];
 
   return steps.map((step, i) => {
     if (i === canonicalIdx) {
       return { step, hex, canonical: true };
     }
-    let targetL;
-    if (i < canonicalIdx) {
-      // Interpolate between lightEnd and source L
-      const t = (canonicalIdx - i) / lighterStops;
-      targetL = L + t * (lightEnd - L);
+
+    const currentStandardL = standardLightness[i];
+
+    // Map the standard-space relative position onto actual lightness
+    const relativePosition = (currentStandardL - matchedStandardL) /
+      (currentStandardL > matchedStandardL
+        ? (0.95 - matchedStandardL)
+        : (matchedStandardL - 0.05));
+
+    const newL = Math.max(0.02, Math.min(0.98,
+      L + relativePosition * (currentStandardL > matchedStandardL ? (0.98 - L) : (L - 0.02))
+    ));
+
+    // Power-curve chroma reduction toward white or black
+    let newC;
+    if (newL > L) {
+      const ratio = (1 - newL) / Math.max(0.001, 1 - L);
+      newC = C * Math.pow(Math.max(0, ratio), 0.3);
     } else {
-      // Interpolate between source L and darkEnd
-      const t = (i - canonicalIdx) / darkerStops;
-      targetL = L + t * (darkEnd - L);
+      const ratio = newL / Math.max(0.001, L);
+      newC = C * Math.pow(Math.max(0, ratio), 0.8);
     }
-    const newLab = oklchToOKLAB([targetL, chromaAt(targetL), H]);
+
+    const newLab = oklchToOKLAB([newL, Math.max(0, newC), H]);
     return { step, hex: oklabToHex(newLab), canonical: false };
   });
 }
