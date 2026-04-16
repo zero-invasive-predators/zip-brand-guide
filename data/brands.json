@@ -6,11 +6,11 @@
       "abbr": "ZIP",
       "colors": [
         {
-          "name": "Primary",
+          "name": "Ocean teal",
           "hex": "#3abeac"
         },
         {
-          "name": "Secondary",
+          "name": "Pacific blue",
           "hex": "#008aab"
         },
         {
@@ -18,7 +18,7 @@
           "hex": "#98d666"
         },
         {
-          "name": "Dark",
+          "name": "Night sky turquoise",
           "hex": "#005159"
         },
         {
