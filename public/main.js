@@ -65,7 +65,7 @@ function oklchToOKLAB([L, C, H]) {
 // colour as the canonical stop and distributing others around it.
 // Lightness stops are derived from Tailwind Teal OKLCH values, giving tighter
 // clustering in the lights and more spread in the darks (600–950).
-// Chroma uses a power curve: 0.3 on the light side (gentle steps at 50–200)
+// Chroma uses a power curve: 0.4 on the light side (gentle steps at 50–200)
 // and 0.8 on the dark side (retains richness through 700–900).
 function generateScale(hex) {
   const lab = hexToOKLAB(hex);
@@ -102,7 +102,7 @@ function generateScale(hex) {
     let newC;
     if (newL > L) {
       const ratio = (1 - newL) / Math.max(0.001, 1 - L);
-      newC = C * Math.pow(Math.max(0, ratio), 0.3);
+      newC = C * Math.pow(Math.max(0, ratio), 0.4);
     } else {
       const ratio = newL / Math.max(0.001, L);
       newC = C * Math.pow(Math.max(0, ratio), 0.8);
