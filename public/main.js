@@ -102,7 +102,7 @@ function generateScale(hex) {
     let newC;
     if (newL > L) {
       const ratio = (1 - newL) / Math.max(0.001, 1 - L);
-      newC = C * Math.pow(Math.max(0, ratio), 0.4);
+      newC = C * Math.pow(Math.max(0, ratio), 0.75);
     } else {
       const ratio = newL / Math.max(0.001, L);
       newC = C * Math.pow(Math.max(0, ratio), 0.8);
