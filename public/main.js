@@ -308,7 +308,7 @@ function renderCMYKRow(color) {
     if (proofHex) {
       softproof = `<span class="cmyk-softproof" style="background:${proofHex}" title="Press preview (${profileLabel})"></span>`;
     }
-    badge = `<span class="cmyk-badge cmyk-badge--official">Brand spec</span>`;
+    badge = `<span class="cmyk-badge cmyk-badge--official">Brand</span>`;
   } else {
     const proofHex = cmykToHex(v, activeProfile);
     if (proofHex) {
