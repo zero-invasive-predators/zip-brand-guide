@@ -32,6 +32,13 @@ header {
   margin: 0 auto;
 }
 
+.header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
 header h1 {
   font-size: 1.75rem;
   font-weight: 700;
@@ -41,6 +48,43 @@ header h1 {
 .subtitle {
   color: var(--text-muted);
   margin-top: 0.25rem;
+}
+
+.profile-note {
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  margin-top: 0.5rem;
+}
+
+/* ─── Profile toggle ─────────────────────────────────────────────────────── */
+.profile-toggle {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+.profile-btn {
+  background: none;
+  border: none;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: background 0.15s, color 0.15s;
+}
+
+.profile-btn + .profile-btn {
+  border-left: 1px solid var(--border);
+}
+
+.profile-btn.active {
+  background: var(--text);
+  color: #fff;
 }
 
 main {
@@ -171,6 +215,65 @@ main {
 
 .hex-label:hover { color: var(--text); }
 .hex-label.copied { color: #16a34a; font-weight: 600; }
+
+/* ─── CMYK row ───────────────────────────────────────────────────────────── */
+.cmyk-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.cmyk-copy {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  flex-shrink: 1;
+  min-width: 0;
+}
+
+.cmyk-values {
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  transition: color 0.15s;
+  white-space: nowrap;
+}
+
+.cmyk-copy:hover .cmyk-values { color: var(--text); }
+.cmyk-copy.copied .cmyk-values { color: #16a34a; font-weight: 600; }
+
+.cmyk-badge {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.15em 0.45em;
+  border-radius: 3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.cmyk-badge--official {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.cmyk-badge--approx {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-faint);
+}
+
+.cmyk-softproof {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  border: 1px solid rgba(0,0,0,.12);
+  flex-shrink: 0;
+  display: inline-block;
+  cursor: help;
+}
 
 .color-actions {
   display: flex;
@@ -396,6 +499,7 @@ dialog {
   padding: 0;
   width: min(420px, 90vw);
   background: var(--surface);
+  margin: auto;
 }
 
 dialog::backdrop {
@@ -467,4 +571,61 @@ input[type="color"] {
   justify-content: flex-end;
   gap: 0.5rem;
   padding-top: 0.25rem;
+}
+
+/* ─── Modal CMYK fields ──────────────────────────────────────────────────── */
+.field-optional {
+  font-weight: 400;
+  color: var(--text-faint);
+  font-size: 0.75rem;
+}
+
+.cmyk-input-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.cmyk-channel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.cmyk-channel > label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-faint);
+  letter-spacing: 0.06em;
+}
+
+.cmyk-channel input[type="number"] {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 0.25rem;
+  font-size: 0.875rem;
+  text-align: center;
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+  -moz-appearance: textfield;
+}
+
+.cmyk-channel input[type="number"]::-webkit-inner-spin-button,
+.cmyk-channel input[type="number"]::-webkit-outer-spin-button {
+  opacity: 0.4;
+}
+
+.cmyk-channel input[type="number"]:focus {
+  border-color: var(--text);
+}
+
+.cmyk-hint {
+  font-size: 0.72rem;
+  color: var(--text-faint);
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  min-height: 1.1em;
 }

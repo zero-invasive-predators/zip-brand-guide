@@ -144,11 +144,70 @@ function autoForeground(hex) {
   return relativeLuminance(hex) > 0.179 ? '#000000' : '#ffffff';
 }
 
+// ─── CMYK ────────────────────────────────────────────────────────────────────
+
+let cmykReady = false;
+const transforms = {};
+
+async function initCMYK() {
+  try {
+    const srgbProfile = new jsColorEngine.Profile();
+    srgbProfile.load('*srgb');
+
+    const profileFiles = {
+      fogra39: '/profiles/CoatedFOGRA39.icc',
+      swop: '/profiles/USWebCoatedSWOP.icc',
+    };
+
+    for (const [key, url] of Object.entries(profileFiles)) {
+      const cmykProfile = new jsColorEngine.Profile();
+      await cmykProfile.loadPromise(url);
+
+      const rgb2cmyk = new jsColorEngine.Transform();
+      rgb2cmyk.create(srgbProfile, cmykProfile, jsColorEngine.eIntent.perceptual);
+
+      const cmyk2rgb = new jsColorEngine.Transform();
+      cmyk2rgb.create(cmykProfile, srgbProfile, jsColorEngine.eIntent.relative);
+
+      transforms[key] = { rgb2cmyk, cmyk2rgb };
+    }
+    cmykReady = true;
+  } catch (e) {
+    console.warn('CMYK engine failed to initialise:', e);
+  }
+}
+
+function approximateCMYK(hex, profileKey) {
+  if (!cmykReady) return null;
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  const out = transforms[profileKey].rgb2cmyk.transform(jsColorEngine.color.RGB(r, g, b));
+  return { c: out.C, m: out.M, y: out.Y, k: out.K };
+}
+
+function cmykToHex(cmyk, profileKey) {
+  if (!cmykReady) return null;
+  const out = transforms[profileKey].cmyk2rgb.transform(
+    jsColorEngine.color.CMYK(cmyk.c, cmyk.m, cmyk.y, cmyk.k)
+  );
+  const h = v => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, '0');
+  return '#' + h(out.R) + h(out.G) + h(out.B);
+}
+
+function getDisplayCMYK(color, profileKey) {
+  if (color.cmyk) return { values: color.cmyk, source: 'official' };
+  if (!cmykReady) return null;
+  const values = approximateCMYK(color.hex, profileKey);
+  return values ? { values, source: 'approximated' } : null;
+}
+
 // ─── State ───────────────────────────────────────────────────────────────────
 
 let brands = [];
 let editingBrandId = null;
 let editingColorIndex = null; // null = add new
+let activeProfile = localStorage.getItem('cmykProfile') || 'swop';
 
 // ─── API ─────────────────────────────────────────────────────────────────────
 
@@ -174,7 +233,7 @@ function renderBadge(pass, label) {
 
 function renderContrastRow(label, hex1, hex2) {
   const ratio = contrastRatio(hex1, hex2);
-  const { aa, aaLarge, aaa } = wcagBadges(ratio);
+  const { aa, aaLarge } = wcagBadges(ratio);
   return `
     <div class="contrast-row">
       <span class="contrast-swatch" style="background:${hex2};color:${hex1}">Aa</span>
@@ -235,6 +294,34 @@ function renderScalePanel(hex) {
     </details>`;
 }
 
+function renderCMYKRow(color) {
+  const display = getDisplayCMYK(color, activeProfile);
+  if (!display) return '';
+
+  const { values: v, source } = display;
+  const cmykStr = `${v.c} ${v.m} ${v.y} ${v.k}`;
+
+  let badge, softproof = '';
+  if (source === 'official') {
+    badge = `<span class="cmyk-badge cmyk-badge--official">Brand spec</span>`;
+  } else {
+    const proofHex = cmykToHex(v, activeProfile);
+    const profileLabel = activeProfile === 'fogra39' ? 'FOGRA39' : 'SWOP v2';
+    if (proofHex) {
+      softproof = `<span class="cmyk-softproof" style="background:${proofHex}" title="Soft proof (${profileLabel})"></span>`;
+    }
+    badge = `<span class="cmyk-badge cmyk-badge--approx">Approx.</span>`;
+  }
+
+  return `
+    <div class="cmyk-row">
+      <button class="copy-btn cmyk-copy" data-hex="${cmykStr}" title="Copy CMYK">
+        <span class="cmyk-values">C ${v.c}&ensp;M ${v.m}&ensp;Y ${v.y}&ensp;K ${v.k}</span>
+      </button>
+      ${badge}${softproof}
+    </div>`;
+}
+
 function renderColorCard(color, index, brandId, allColors) {
   const fg = autoForeground(color.hex);
   return `
@@ -245,6 +332,7 @@ function renderColorCard(color, index, brandId, allColors) {
       <div class="color-info">
         <span class="color-name">${color.name}</span>
         <button class="copy-btn hex-label" data-hex="${color.hex}">${color.hex}</button>
+        ${renderCMYKRow(color)}
         <div class="color-actions">
           <button class="btn-icon edit-color" data-brand="${brandId}" data-index="${index}" title="Edit">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
@@ -284,12 +372,16 @@ function renderAll() {
 
 // ─── Copy to clipboard ────────────────────────────────────────────────────────
 
-function copyToClipboard(hex, btn) {
-  navigator.clipboard.writeText(hex).then(() => {
+function copyToClipboard(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
     const original = btn.innerHTML;
     btn.classList.add('copied');
-    btn.innerHTML = btn.classList.contains('hex-label') ? 'Copied!' : original;
-    if (!btn.classList.contains('hex-label')) {
+    if (btn.classList.contains('hex-label')) {
+      btn.innerHTML = 'Copied!';
+    } else if (btn.classList.contains('cmyk-copy')) {
+      const valSpan = btn.querySelector('.cmyk-values');
+      if (valSpan) valSpan.textContent = 'Copied!';
+    } else {
       const hint = btn.querySelector('.copy-hint');
       if (hint) hint.textContent = 'Copied!';
     }
@@ -300,6 +392,24 @@ function copyToClipboard(hex, btn) {
   });
 }
 
+// ─── Profile toggle ───────────────────────────────────────────────────────────
+
+document.querySelectorAll('.profile-btn').forEach(b => {
+  b.classList.toggle('active', b.dataset.profile === activeProfile);
+});
+
+document.querySelector('.profile-toggle').addEventListener('click', (e) => {
+  const btn = e.target.closest('.profile-btn');
+  if (!btn || btn.dataset.profile === activeProfile) return;
+  activeProfile = btn.dataset.profile;
+  localStorage.setItem('cmykProfile', activeProfile);
+  document.querySelectorAll('.profile-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.profile === activeProfile);
+  });
+  renderAll();
+  updateCMYKHint();
+});
+
 // ─── Modal ────────────────────────────────────────────────────────────────────
 
 const modal = document.getElementById('color-modal');
@@ -309,6 +419,22 @@ const hexInput = document.getElementById('color-hex');
 const pickerInput = document.getElementById('color-picker');
 const modalTitle = document.getElementById('modal-title');
 const submitBtn = document.getElementById('modal-submit');
+const cmykCInput = document.getElementById('cmyk-c');
+const cmykMInput = document.getElementById('cmyk-m');
+const cmykYInput = document.getElementById('cmyk-y');
+const cmykKInput = document.getElementById('cmyk-k');
+const cmykHint = document.getElementById('cmyk-hint');
+
+function updateCMYKHint() {
+  if (!cmykReady || !isValidHex(hexInput.value.trim())) {
+    cmykHint.textContent = '';
+    return;
+  }
+  const approx = approximateCMYK(hexInput.value.trim(), activeProfile);
+  if (!approx) { cmykHint.textContent = ''; return; }
+  const profileLabel = activeProfile === 'fogra39' ? 'FOGRA39' : 'SWOP v2';
+  cmykHint.textContent = `Approx. (${profileLabel}): C ${approx.c}  M ${approx.m}  Y ${approx.y}  K ${approx.k}`;
+}
 
 function openModal(brandId, colorIndex = null) {
   editingBrandId = brandId;
@@ -321,6 +447,12 @@ function openModal(brandId, colorIndex = null) {
     nameInput.value = color.name;
     hexInput.value = color.hex;
     pickerInput.value = color.hex;
+    if (color.cmyk) {
+      cmykCInput.value = color.cmyk.c;
+      cmykMInput.value = color.cmyk.m;
+      cmykYInput.value = color.cmyk.y;
+      cmykKInput.value = color.cmyk.k;
+    }
     modalTitle.textContent = 'Edit colour';
     submitBtn.textContent = 'Save colour';
   } else {
@@ -329,20 +461,23 @@ function openModal(brandId, colorIndex = null) {
     pickerInput.value = '#000000';
     hexInput.value = '#000000';
   }
+  updateCMYKHint();
   modal.showModal();
 }
 
 document.getElementById('modal-cancel').addEventListener('click', () => modal.close());
 
-// Keep picker and text input in sync
+// Keep picker and text input in sync; update CMYK hint on change
 pickerInput.addEventListener('input', () => {
   hexInput.value = pickerInput.value;
+  updateCMYKHint();
 });
 
 hexInput.addEventListener('input', () => {
   if (isValidHex(hexInput.value)) {
     pickerInput.value = hexInput.value;
   }
+  updateCMYKHint();
 });
 
 form.addEventListener('submit', async (e) => {
@@ -352,13 +487,25 @@ form.addEventListener('submit', async (e) => {
   if (!hex.startsWith('#')) hex = '#' + hex;
   if (!isValidHex(hex) || !name) return;
 
+  const cVal = cmykCInput.value.trim();
+  const mVal = cmykMInput.value.trim();
+  const yVal = cmykYInput.value.trim();
+  const kVal = cmykKInput.value.trim();
+
+  let cmyk;
+  if (cVal !== '' || mVal !== '' || yVal !== '' || kVal !== '') {
+    const clamp = s => Math.max(0, Math.min(100, Math.round(parseFloat(s) || 0)));
+    cmyk = { c: clamp(cVal), m: clamp(mVal), y: clamp(yVal), k: clamp(kVal) };
+  }
+
   const brand = brands.find(b => b.id === editingBrandId);
   const colors = [...brand.colors];
+  const entry = cmyk ? { name, hex, cmyk } : { name, hex };
 
   if (editingColorIndex !== null) {
-    colors[editingColorIndex] = { name, hex };
+    colors[editingColorIndex] = entry;
   } else {
-    colors.push({ name, hex });
+    colors.push(entry);
   }
 
   await saveBrandColors(editingBrandId, colors);
@@ -401,4 +548,4 @@ document.getElementById('brands-container').addEventListener('click', async (e) 
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
 
-fetchBrands().then(renderAll);
+Promise.all([fetchBrands(), initCMYK()]).then(renderAll);

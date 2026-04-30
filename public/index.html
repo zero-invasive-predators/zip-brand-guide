@@ -8,8 +8,17 @@
 </head>
 <body>
   <header>
-    <h1>Brand Assets</h1>
-    <p class="subtitle">Zero Invasive Predators &amp; sub-brands</p>
+    <div class="header-top">
+      <div>
+        <h1>Brand Assets</h1>
+        <p class="subtitle">Zero Invasive Predators &amp; sub-brands</p>
+      </div>
+      <div class="profile-toggle" role="group" aria-label="CMYK profile">
+        <button class="profile-btn" data-profile="swop">SWOP v2</button>
+        <button class="profile-btn" data-profile="fogra39">FOGRA39</button>
+      </div>
+    </div>
+    <p class="profile-note">CMYK profile affects approximated values only</p>
   </header>
 
   <main id="brands-container">
@@ -31,6 +40,28 @@
           <input type="text" id="color-hex" placeholder="#000000" pattern="^#[0-9a-fA-F]{6}$" required autocomplete="off">
         </div>
       </div>
+      <div class="field">
+        <label>CMYK <span class="field-optional">— optional, enter values from brand guidelines</span></label>
+        <div class="cmyk-input-group">
+          <div class="cmyk-channel">
+            <label for="cmyk-c">C</label>
+            <input type="number" id="cmyk-c" min="0" max="100" step="1" placeholder="—" autocomplete="off">
+          </div>
+          <div class="cmyk-channel">
+            <label for="cmyk-m">M</label>
+            <input type="number" id="cmyk-m" min="0" max="100" step="1" placeholder="—" autocomplete="off">
+          </div>
+          <div class="cmyk-channel">
+            <label for="cmyk-y">Y</label>
+            <input type="number" id="cmyk-y" min="0" max="100" step="1" placeholder="—" autocomplete="off">
+          </div>
+          <div class="cmyk-channel">
+            <label for="cmyk-k">K</label>
+            <input type="number" id="cmyk-k" min="0" max="100" step="1" placeholder="—" autocomplete="off">
+          </div>
+        </div>
+        <p class="cmyk-hint" id="cmyk-hint"></p>
+      </div>
       <div class="modal-actions">
         <button type="button" id="modal-cancel" class="btn-ghost">Cancel</button>
         <button type="submit" id="modal-submit" class="btn-primary">Add colour</button>
@@ -38,6 +69,7 @@
     </form>
   </dialog>
 
+  <script src="/vendor/jsColorEngineWeb.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
