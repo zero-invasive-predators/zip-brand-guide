@@ -83,6 +83,30 @@
         {
           "name": "Black",
           "hex": "#343430"
+        },
+        {
+          "name": "Moss",
+          "hex": "#8CAC2B"
+        },
+        {
+          "name": "Tussock",
+          "hex": "#F0AA07"
+        },
+        {
+          "name": "Forest",
+          "hex": "#5E7841"
+        },
+        {
+          "name": "Night sky",
+          "hex": "#2A2A44"
+        },
+        {
+          "name": "Toetoe",
+          "hex": "#F9F7EE"
+        },
+        {
+          "name": "Earth",
+          "hex": "#925735"
         }
       ]
     },
