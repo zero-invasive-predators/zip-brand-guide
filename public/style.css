@@ -180,6 +180,15 @@ main {
 
 .swatch:hover .copy-hint { opacity: 1; }
 
+.swatch-cmyk-chip {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 4rem;
+  height: 100%;
+  pointer-events: none;
+}
+
 .copy-hint {
   font-size: 0.75rem;
   font-weight: 600;

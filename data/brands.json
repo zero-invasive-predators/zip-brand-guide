@@ -7,27 +7,63 @@
       "colors": [
         {
           "name": "Ocean teal",
-          "hex": "#3abeac"
+          "hex": "#3abeac",
+          "cmyk": {
+            "c": 68,
+            "m": 0,
+            "y": 40,
+            "k": 0
+          }
         },
         {
           "name": "Pacific blue",
-          "hex": "#008aab"
+          "hex": "#008aab",
+          "cmyk": {
+            "c": 100,
+            "m": 23,
+            "y": 29,
+            "k": 0
+          }
         },
         {
           "name": "Waxgill green",
-          "hex": "#98d666"
+          "hex": "#98d666",
+          "cmyk": {
+            "c": 43,
+            "m": 0,
+            "y": 78,
+            "k": 0
+          }
         },
         {
           "name": "Night sky turquoise",
-          "hex": "#005159"
+          "hex": "#005159",
+          "cmyk": {
+            "c": 80,
+            "m": 0,
+            "y": 23,
+            "k": 70
+          }
         },
         {
           "name": "Black",
-          "hex": "#1b2223"
+          "hex": "#1b2223",
+          "cmyk": {
+            "c": 0,
+            "m": 0,
+            "y": 0,
+            "k": 100
+          }
         },
         {
           "name": "White",
-          "hex": "#ffffff"
+          "hex": "#ffffff",
+          "cmyk": {
+            "c": 0,
+            "m": 0,
+            "y": 0,
+            "k": 0
+          }
         }
       ]
     },
@@ -56,16 +92,64 @@
       "abbr": "TMAP",
       "colors": [
         {
-          "name": "Primary",
-          "hex": "#ffc964"
+          "name": "Haumata (Primary)",
+          "hex": "#ffc964",
+          "cmyk": {
+            "c": 0,
+            "m": 22,
+            "y": 71,
+            "k": 0
+          }
         },
         {
-          "name": "Secondary",
-          "hex": "#7ec8f2"
+          "name": "Taumata (Secondary)",
+          "hex": "#7ec8f2",
+          "cmyk": {
+            "c": 45,
+            "m": 6,
+            "y": 0,
+            "k": 0
+          }
         },
         {
           "name": "Black",
-          "hex": "#000000"
+          "hex": "#000000",
+          "cmyk": {
+            "c": 20,
+            "m": 20,
+            "y": 20,
+            "k": 100
+          }
+        },
+        {
+          "name": "Tuauri",
+          "hex": "#523965",
+          "cmyk": {
+            "c": 58,
+            "m": 73,
+            "y": 10,
+            "k": 43
+          }
+        },
+        {
+          "name": "Toto",
+          "hex": "#b00d2e",
+          "cmyk": {
+            "c": 21,
+            "m": 100,
+            "y": 86,
+            "k": 13
+          }
+        },
+        {
+          "name": "Kōhatu",
+          "hex": "#cccccc",
+          "cmyk": {
+            "c": 19,
+            "m": 15,
+            "y": 16,
+            "k": 0
+          }
         }
       ]
     },
@@ -76,27 +160,63 @@
       "colors": [
         {
           "name": "Dark green",
-          "hex": "#415927"
+          "hex": "#415927",
+          "cmyk": {
+            "c": 70,
+            "m": 40,
+            "y": 100,
+            "k": 40
+          }
         },
         {
           "name": "Kākāpō green",
-          "hex": "#9ac13c"
+          "hex": "#9ac13c",
+          "cmyk": {
+            "c": 45,
+            "m": 5,
+            "y": 100,
+            "k": 0
+          }
         },
         {
           "name": "Lime green",
-          "hex": "#ccdc44"
+          "hex": "#ccdc44",
+          "cmyk": {
+            "c": 24,
+            "m": 0,
+            "y": 90,
+            "k": 0
+          }
         },
         {
           "name": "Purple",
-          "hex": "#413541"
+          "hex": "#413541",
+          "cmyk": {
+            "c": 66,
+            "m": 70,
+            "y": 50,
+            "k": 50
+          }
         },
         {
           "name": "Glowing yellow",
-          "hex": "#fbb040"
+          "hex": "#fbb040",
+          "cmyk": {
+            "c": 0,
+            "m": 35,
+            "y": 85,
+            "k": 0
+          }
         },
         {
           "name": "Glowing orange",
-          "hex": "#f15a29"
+          "hex": "#f15a29",
+          "cmyk": {
+            "c": 0,
+            "m": 80,
+            "y": 95,
+            "k": 0
+          }
         }
       ]
     }

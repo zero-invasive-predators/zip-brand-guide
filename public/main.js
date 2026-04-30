@@ -302,11 +302,15 @@ function renderCMYKRow(color) {
   const cmykStr = `${v.c} ${v.m} ${v.y} ${v.k}`;
 
   let badge, softproof = '';
+  const profileLabel = activeProfile === 'fogra39' ? 'FOGRA39' : 'SWOP v2';
   if (source === 'official') {
+    const proofHex = cmykToHex(v, activeProfile);
+    if (proofHex) {
+      softproof = `<span class="cmyk-softproof" style="background:${proofHex}" title="Press preview (${profileLabel})"></span>`;
+    }
     badge = `<span class="cmyk-badge cmyk-badge--official">Brand spec</span>`;
   } else {
     const proofHex = cmykToHex(v, activeProfile);
-    const profileLabel = activeProfile === 'fogra39' ? 'FOGRA39' : 'SWOP v2';
     if (proofHex) {
       softproof = `<span class="cmyk-softproof" style="background:${proofHex}" title="Soft proof (${profileLabel})"></span>`;
     }
@@ -324,10 +328,25 @@ function renderCMYKRow(color) {
 
 function renderColorCard(color, index, brandId, allColors) {
   const fg = autoForeground(color.hex);
+
+  let swatchChip = '';
+  const display = getDisplayCMYK(color, activeProfile);
+  if (display) {
+    const proofHex = cmykToHex(display.values, activeProfile);
+    if (proofHex) {
+      const profileLabel = activeProfile === 'fogra39' ? 'FOGRA39' : 'SWOP v2';
+      const chipTitle = display.source === 'official'
+        ? `Press preview (${profileLabel})`
+        : `Soft proof (${profileLabel})`;
+      swatchChip = `<span class="swatch-cmyk-chip" style="background:${proofHex}" title="${chipTitle}"></span>`;
+    }
+  }
+
   return `
     <div class="color-card" data-brand="${brandId}" data-index="${index}">
       <button class="swatch copy-btn" data-hex="${color.hex}" style="background:${color.hex}" aria-label="Copy ${color.hex}">
         <span class="copy-hint" style="color:${fg}">Copy</span>
+        ${swatchChip}
       </button>
       <div class="color-info">
         <span class="color-name">${color.name}</span>
