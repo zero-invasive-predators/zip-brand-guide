@@ -538,7 +538,9 @@ form.addEventListener('submit', async (e) => {
 document.getElementById('brands-container').addEventListener('click', async (e) => {
   const copyBtn = e.target.closest('.copy-btn');
   if (copyBtn) {
-    copyToClipboard(copyBtn.dataset.hex, copyBtn);
+    const value = copyBtn.dataset.hex;
+    const copyValue = /^#[0-9A-Fa-f]{6}$/.test(value) ? value.slice(1) : value;
+    copyToClipboard(copyValue, copyBtn);
     return;
   }
 
