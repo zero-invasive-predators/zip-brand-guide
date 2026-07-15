@@ -153,7 +153,7 @@ Add Typekit kits and family variables in `public/styles/type.css` (imported firs
 
 ### Logos
 
-`logos` is an array of assets. Each entry has:
+`logos` is an array of assets. Each entry has: 
 
 | Field | Purpose |
 |---|---|
