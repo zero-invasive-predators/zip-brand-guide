@@ -1,0 +1,11 @@
+@import url('https://use.typekit.net/vju5eif.css');
+
+:root {
+    --font-family-proxima-nova: 'proxima-nova', sans-serif;
+    --font-family-montserrat: montserrat, sans-serif;
+    --font-family-aptos: aptos, sans-serif;
+    --font-family-aptos-display: aptos-display, sans-serif;
+    --font-family-nexa: nexa, sans-serif;
+    --font-family-nexa-text: nexa-text, sans-serif;
+    --font-family-bogart: bogart, sans-serif;
+}

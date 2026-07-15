@@ -10,6 +10,8 @@ const DATA_FILE = path.join(__dirname, 'data', 'brands.json');
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+// Serve brands.json for local parity with the static build path
+app.use('/data', express.static(path.join(__dirname, 'data')));
 
 function readData() {
   return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));

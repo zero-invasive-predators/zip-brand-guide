@@ -4,6 +4,90 @@
       "id": "zip",
       "name": "Zero Invasive Predators",
       "abbr": "ZIP",
+      "usage": {
+        "colors": "Use *Ocean teal* and *Pacific blue* as primary brand colours in documents and slides. *Night sky turquoise* works well for headings on light backgrounds. *Waxgill green* is best used as an accent.",
+        "typography": "Use brand fonts where available – they should be available in any Adobe apps, and in Canva. Use fallback fonts in Microsoft apps, or where the others aren't available."
+      },
+      "fonts": [
+        {
+          "role": "Headings",
+          "sample": "Protecting Aotearoa’s wildlife",
+          "ideal": {
+            "name": "Proxima Nova",
+            "google": null,
+            "cssVar": "--font-family-proxima-nova",
+            "fallback": "Arial, sans-serif",
+            "weights": [
+              {
+                "display": 700,
+                "visual": "Bold"
+              }
+            ]
+          },
+          "fallback": {
+            "name": "Aptos Display",
+            "google": null,
+            "cssVar": "--font-family-aptos-display",
+            "fallback": "Arial, sans-serif",
+            "weights": [
+              {
+                "display": 700,
+                "visual": "Bold"
+              }
+            ]
+          }
+        },
+        {
+          "role": "Body",
+          "sample": "The quick brown kiwi jumps over the lazy stoat.",
+          "ideal": {
+            "name": "Proxima Nova",
+            "google": null,
+            "cssVar": "--font-family-proxima-nova",
+            "fallback": "Arial, sans-serif",
+            "weights": [
+              {
+                "display": 400,
+                "visual": "Regular"
+              }
+            ]
+          },
+          "fallback": {
+            "name": "Aptos",
+            "google": null,
+            "cssVar": "--font-family-aptos",
+            "fallback": "Arial, sans-serif",
+            "weights": [
+              {
+                "display": 700,
+                "visual": "Bold"
+              }
+            ]
+          }
+        }
+      ],
+      "logos": [
+        {
+          "name": "Logo • Light backgrounds",
+          "file": "logos/zip/zip-logo-light.png",
+          "background": "light"
+        },
+        {
+          "name": "Logo • Dark backgrounds",
+          "file": "logos/zip/zip-logo-dark.png",
+          "background": "dark"
+        },
+        {
+          "name": "Brandmark • Light backgrounds",
+          "file": "logos/zip/zip-brandmark-light.png",
+          "background": "light"
+        },
+        {
+          "name": "Brandmark • Dark backgrounds",
+          "file": "logos/zip/zip-brandmark-dark.png",
+          "background": "dark"
+        }
+      ],
       "colors": [
         {
           "name": "Ocean teal",
@@ -71,6 +155,85 @@
       "id": "pfsw",
       "name": "Predator Free South Westland",
       "abbr": "PFSW",
+      "usage": {
+        "colors": "Headings should be in *Primary* or *Black*, and smaller body text should always be in *Black*. *Primary* and *Secondary* can both be used for decorative elements.",
+        "typography": "Use brand fonts where available – they should be available in any Adobe apps, and in Canva. Use fallback fonts in Microsoft apps, or where the others aren't available."
+      },
+      "fonts": [
+        {
+          "role": "Headings",
+          "sample": "Predator Free South Westland",
+          "ideal": {
+            "name": "Bogart",
+            "google": null,
+            "cssVar": "--font-family-bogart",
+            "fallback": "Arial, sans-serif",
+            "weights": [
+              {
+                "display": 700,
+                "visual": "Bold"
+              }
+            ]
+          },
+          "fallback": {
+            "name": "Georgia",
+            "google": null,
+            "cssVar": null,
+            "fallback": "Georgia, serif",
+            "weights": [
+              {
+                "display": 700,
+                "visual": "Bold"
+              }
+            ]
+          }
+        },
+        {
+          "role": "Body",
+          "sample": "Working together for a predator-free South Westland.",
+          "ideal": {
+            "name": "Proxima Nova",
+            "google": null,
+            "cssVar": "--font-family-proxima-nova",
+            "fallback": "Arial, sans-serif",
+            "weights": [
+              {
+                "display": 400,
+                "visual": "Regular"
+              }
+            ]
+          },
+          "fallback": {
+            "name": "Aptos",
+            "google": null,
+            "cssVar": "--font-family-aptos",
+            "fallback": "Arial, sans-serif",
+            "weights": [
+              {
+                "display": 400,
+                "visual": "Regular"
+              }
+            ]
+          }
+        }
+      ],
+      "logos": [
+        {
+          "name": "Logo • Light backgrounds",
+          "file": "logos/pfsw/pfsw-logo-light.png",
+          "background": "light"
+        },
+        {
+          "name": "Logo • Dark backgrounds",
+          "file": "logos/pfsw/pfsw-logo-dark.png",
+          "background": "dark"
+        },
+        {
+          "name": "Tohu • Any background",
+          "file": "logos/pfsw/pfsw-tohu.png",
+          "background": "any"
+        }
+      ],
       "colors": [
         {
           "name": "Primary",
@@ -85,28 +248,38 @@
           "hex": "#343430"
         },
         {
+          "name": "White",
+          "hex": "#ffffff"
+        },
+        {
           "name": "Moss",
-          "hex": "#8CAC2B"
+          "hex": "#8CAC2B",
+          "designerOnly": true
         },
         {
           "name": "Tussock",
-          "hex": "#F0AA07"
+          "hex": "#F0AA07",
+          "designerOnly": true
         },
         {
           "name": "Forest",
-          "hex": "#5E7841"
+          "hex": "#5E7841",
+          "designerOnly": true
         },
         {
           "name": "Night sky",
-          "hex": "#2A2A44"
+          "hex": "#2A2A44",
+          "designerOnly": true
         },
         {
           "name": "Toetoe",
-          "hex": "#F9F7EE"
+          "hex": "#F9F7EE",
+          "designerOnly": true
         },
         {
           "name": "Earth",
-          "hex": "#925735"
+          "hex": "#925735",
+          "designerOnly": true
         }
       ]
     },
@@ -114,6 +287,90 @@
       "id": "tmap",
       "name": "Te Manahuna Aoraki Project",
       "abbr": "TMAP",
+      "usage": {
+        "colors": "*Haumata* and *Taumata* are the hero colours, and can be used for backgrounds or decorative elements. Note that they are not appropriate for text. Use *Black* or *Tuauri* for all text. *Toto* and *Kōhatu* can be used sparingly for emphasis.",
+        "typography": "Use brand fonts where available – they should be available in any Adobe apps, and in Canva. Use fallback fonts in Microsoft apps, or where the others aren't available."
+      },
+      "fonts": [
+        {
+          "role": "Headings",
+          "sample": "Te Manahuna Aoraki Project",
+          "ideal": {
+            "name": "Montserrat",
+            "google": null,
+            "cssVar": "--font-family-montserrat",
+            "fallback": "Arial, sans-serif",
+            "weights": [
+              {
+                "display": 700,
+                "visual": "Bold"
+              }
+            ]
+          },
+          "fallback": {
+            "name": "Aptos Display",
+            "google": null,
+            "cssVar": "--font-family-aptos-display",
+            "fallback": "Arial, sans-serif",
+            "weights": [
+              {
+                "display": 700,
+                "visual": "Bold"
+              }
+            ]
+          }
+        },
+        {
+          "role": "Body",
+          "sample": "Restoring the mauri of the upper Mackenzie Basin.",
+          "ideal": {
+            "name": "Montserrat",
+            "google": null,
+            "cssVar": "--font-family-montserrat",
+            "fallback": "Arial, sans-serif",
+            "weights": [
+              {
+                "display": 400,
+                "visual": "Regular"
+              }
+            ]
+          },
+          "fallback": {
+            "name": "Aptos",
+            "google": null,
+            "cssVar": "--font-family-aptos",
+            "fallback": "Arial, sans-serif",
+            "weights": [
+              {
+                "display": 400,
+                "visual": "Regular"
+              }
+            ]
+          }
+        }
+      ],
+      "logos": [
+        {
+          "name": "Logo • Light backgrounds",
+          "file": "logos/tmap/tmap-logo-light.png",
+          "background": "light"
+        },
+        {
+          "name": "Logo • Dark backgrounds",
+          "file": "logos/tmap/tmap-logo-dark.png",
+          "background": "dark"
+        },
+        {
+          "name": "Tohu • Light backgrounds",
+          "file": "logos/tmap/tmap-tohu-light.png",
+          "background": "light"
+        },
+        {
+          "name": "Tohu • Dark backgrounds",
+          "file": "logos/tmap/tmap-tohu-dark.png",
+          "background": "dark"
+        }
+      ],
       "colors": [
         {
           "name": "Haumata (Primary)",
@@ -174,6 +431,16 @@
             "y": 16,
             "k": 0
           }
+        },
+        {
+          "name": "White",
+          "hex": "#ffffff",
+          "cmyk": {
+            "c": 0,
+            "m": 0,
+            "y": 0,
+            "k": 0
+          }
         }
       ]
     },
@@ -181,6 +448,85 @@
       "id": "pfr",
       "name": "Predator Free Rakiura",
       "abbr": "PFR",
+      "usage": {
+        "colors": "*Dark green* and *Purple* are best for headings, with body text in *Purple* or *Black*. Other colours work as accents on dark backgrounds. See below for more accessible colour combinations.",
+        "typography": "Use brand fonts where available – they should be available in any Adobe apps, and in Canva. Use fallback fonts in Microsoft apps, or where the others aren't available."
+      },
+      "fonts": [
+        {
+          "role": "Headings",
+          "sample": "Predator Free Rakiura",
+          "ideal": {
+            "name": "Nexa",
+            "google": null,
+            "cssVar": "--font-family-nexa",
+            "fallback": "Arial, sans-serif",
+            "weights": [
+              {
+                "display": 700,
+                "visual": "Bold"
+              }
+            ]
+          },
+          "fallback": {
+            "name": "Aptos Display",
+            "google": null,
+            "cssVar": "--font-family-aptos-display",
+            "fallback": "Arial, sans-serif",
+            "weights": [
+              {
+                "display": 700,
+                "visual": "Bold"
+              }
+            ]
+          }
+        },
+        {
+          "role": "Body",
+          "sample": "A community working toward a predator-free Rakiura Stewart Island.",
+          "ideal": {
+            "name": "Nexa Text",
+            "google": null,
+            "cssVar": "--font-family-nexa-text",
+            "fallback": "Arial, sans-serif",
+            "weights": [
+              {
+                "display": 400,
+                "visual": "Regular"
+              }
+            ]
+          },
+          "fallback": {
+            "name": "Aptos",
+            "google": null,
+            "cssVar": "--font-family-aptos",
+            "fallback": "Arial, sans-serif",
+            "weights": [
+              {
+                "display": 400,
+                "visual": "Regular"
+              }
+            ]
+          }
+        }
+      ],
+      "logos": [
+        {
+          "name": "Logo • Light backgrounds",
+          "file": "logos/pfr/pfr-logo-light.png",
+          "background": "light"
+        },
+        {
+          "name": "Logo • Dark backgrounds",
+          "file": "logos/pfr/pfr-logo-dark.png",
+          "background": "dark"
+        },
+        {
+          "name": "Brandmark • Any",
+          "file": "logos/pfr/pfr-brandmark.png",
+          "background": "any"
+        }
+      ],
       "colors": [
         {
           "name": "Dark green",
@@ -239,6 +585,26 @@
             "c": 0,
             "m": 80,
             "y": 95,
+            "k": 0
+          }
+        },
+        {
+          "name": "Black",
+          "hex": "#1b2223",
+          "cmyk": {
+            "c": 0,
+            "m": 0,
+            "y": 0,
+            "k": 100
+          }
+        },
+        {
+          "name": "White",
+          "hex": "#ffffff",
+          "cmyk": {
+            "c": 0,
+            "m": 0,
+            "y": 0,
             "k": 0
           }
         }

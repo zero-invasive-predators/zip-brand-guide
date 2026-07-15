@@ -1,32 +1,36 @@
 # ZIP Brand Assets
 
-A simple brand colour manager for Zero Invasive Predators and its sub-brands.
+Brand colour, typography, and logo guide for Zero Invasive Predators and its sub-brands.
 
-Lets you set, view, and copy brand colours, check colour accessibility against WCAG standards, and generate tint/shade scales for any colour in the palette.
+Use it locally as a designer tool (edit colours, CMYK, contrast, tints), or deploy a **read-only** site to GitHub Pages for people working in Microsoft Office, Google Docs, Canva, and similar tools.
 
 ---
 
 ## Brands
 
-| Abbreviation | Full name |
-|---|---|
-| ZIP | Zero Invasive Predators |
-| PFSW | Predator Free South Westland |
-| TMAP | Te Manahuna Aoraki Project |
-| PFR | Predator Free Rakiura |
+| Abbreviation | Full name | Folder / id |
+|---|---|---|
+| ZIP | Zero Invasive Predators | `zip` |
+| PFSW | Predator Free South Westland | `pfsw` |
+| TMAP | Te Manahuna Aoraki Project | `tmap` |
+| PFR | Predator Free Rakiura | `pfr` |
 
 ---
 
 ## Features
 
-- **Add and manage colours** — name each colour and set it with a hex input or colour picker
-- **Copy to clipboard** — click any swatch, hex code, or CMYK values to copy them instantly
-- **CMYK values** — each colour card shows CMYK values; enter official values from brand guidelines when adding/editing a colour, or get an ICC-profile-based approximation automatically. Official values are badged **Brand spec**; approximated values are badged **Approx.**. Both show a preview chip inside the swatch and alongside the values, showing how the colour reproduces under the active press profile
-- **CMYK profile toggle** — switch between SWOP v2 (US Web Coated, default) and FOGRA39 (ISO Coated v2, common Australasian/European standard) in the top-right; affects the preview chip on all colours and the four approximated CMYK values
-- **Accessibility checker** — expand any colour to see WCAG contrast ratios against white, black, and other colours in the same brand palette; results are labelled AA, AA Large, and AAA
-- **Tints & shades** — expand any colour to generate a full 50–950 scale using the OKLCH colour space for smooth, perceptually uniform gradients; each stop is copyable
+- **Sidebar navigation** — jump between brands and sections: Logos → Colours → Typography → Pairings
+- **Simple / Designer mode** — toggle at the bottom of the sidebar (saved in `localStorage`; defaults to Simple)
+  - **Simple** — everyday colours, logos, typography, AA pairings; hides CMYK, tints/shades, detailed contrast ratios, and colour editing
+  - **Designer** — full colour tools (CMYK profile toggle, accessibility panels, tint/shade scales) plus editing when running locally
+- **Logos** — configurable assets with custom names, light/dark/any preview backgrounds, and forced PNG download
+- **Colours** — name, hex copy; optional CMYK, accessibility, and tint scales in Designer
+- **Designer-only colours** — mark swatches with `"designerOnly": true` to hide them (and their pairings) in Simple mode
+- **Acceptable pairings** — auto grid of text/background combinations that pass WCAG AA, with a short usage note (override per brand via `usage.pairings`)
+- **Typography** — 2-column grid of **brand fonts** (ideal) vs **fallback fonts** (Microsoft / when unavailable); copyable names; samples styled per weight
+- **Usage blurbs** — short guidance under colours and typography per brand; wrap words in `*asterisks*` for **bold**
 
-Colour data is saved to `data/brands.json`.
+All brand metadata lives in [`data/brands.json`](data/brands.json).
 
 ---
 
@@ -36,61 +40,205 @@ Colour data is saved to `data/brands.json`.
 
 ---
 
-## Getting started
-
-Install dependencies:
+## Local use (designer)
 
 ```bash
 npm install
-```
-
-Start the app:
-
-```bash
 npm start
 ```
 
-Then open [http://localhost:3001](http://localhost:3001) in your browser.
+Open [http://localhost:3001](http://localhost:3001).
+
+In **Designer** mode (sidebar switch), you can add/edit/delete colours. Changes are written to `data/brands.json` via the Express API.
+
+Fonts, usage blurbs, logo paths, and `designerOnly` flags are edited in `data/brands.json` (not in the UI).
+
+---
+
+## Editing brand data
+
+Each brand in `data/brands.json` looks like:
+
+```json
+{
+  "id": "zip",
+  "name": "Zero Invasive Predators",
+  "abbr": "ZIP",
+  "usage": {
+    "colors": "Use *Ocean teal* and Pacific blue as primary brand colours…",
+    "typography": "…",
+    "pairings": "Optional override — otherwise a default AA contrast note is shown."
+  },
+  "fonts": [
+    {
+      "role": "Headings",
+      "sample": "…",
+      "ideal": {
+        "name": "Proxima Nova",
+        "google": null,
+        "cssVar": "--font-family-proxima-nova",
+        "fallback": "Arial, sans-serif",
+        "weights": [
+          { "display": 700, "visual": "Bold" }
+        ]
+      },
+      "fallback": {
+        "name": "Aptos Display",
+        "cssVar": "--font-family-aptos-display",
+        "fallback": "Arial, sans-serif",
+        "weights": [
+          { "display": 700, "visual": "Bold" }
+        ]
+      }
+    }
+  ],
+  "logos": [
+    {
+      "name": "Logo • Light backgrounds",
+      "file": "logos/zip/zip-logo-light.png",
+      "background": "light"
+    },
+    {
+      "name": "Tohu • Any background",
+      "file": "logos/pfsw/pfsw-tohu.png",
+      "background": "any"
+    }
+  ],
+  "colors": [
+    {
+      "name": "Ocean teal",
+      "hex": "#3abeac",
+      "cmyk": { "c": 68, "m": 0, "y": 40, "k": 0 }
+    }
+  ]
+}
+```
+
+### Typography
+
+Each entry in `fonts` is one **role** (e.g. Headings, Body) with a shared `sample` string and two faces:
+
+| Field | Purpose |
+|---|---|
+| `ideal` | Brand font for Adobe, Canva, Squarespace, etc. |
+| `fallback` | Office / Microsoft-facing alternative when the brand font isn’t available |
+
+Shown as a 2-column grid: **Brand fonts (where available)** | **Fallback fonts (for Microsoft apps, or where not available)**.
+
+Per face:
+
+- `name` — label shown and copied to the clipboard
+- `cssVar` — optional CSS variable from [`public/styles/type.css`](public/styles/type.css) (Adobe Fonts / Typekit)
+- `google` — optional Google Fonts family id (use `+` for spaces, e.g. `"Open+Sans"`); set `null` when using Typekit or system fonts
+- `fallback` — CSS `font-family` stack if the face fails to load (not the Office font card)
+- `weights` — list of `{ "display": 700, "visual": "Bold" }`
+  - `display` — CSS `font-weight` applied to that sample (not shown in the UI)
+  - `visual` — label above the sample (e.g. Regular, Medium, Bold)
+
+Add Typekit kits and family variables in `public/styles/type.css` (imported first via `style.css`).
+
+### Colours
+
+- `name`, `hex` (required)
+- `cmyk` — optional official brand values; otherwise Designer mode can approximate from ICC profiles
+- `designerOnly: true` — hidden in Simple mode (including pairings); still visible in Designer with a badge
+
+```json
+{
+  "name": "Waxgill green",
+  "hex": "#98d666",
+  "designerOnly": true
+}
+```
+
+### Logos
+
+`logos` is an array of assets. Each entry has:
+
+| Field | Purpose |
+|---|---|
+| `name` | Label under the preview (e.g. `"Tohu • Any background"`) |
+| `file` | Path under `public/` (e.g. `"logos/zip/zip-logo-light.png"`) |
+| `background` | Preview chrome: `"light"`, `"dark"`, or `"any"` (checkerboard) |
+
+Drop PNGs into brand folders. Filenames are usually prefixed with the brand id:
+
+```
+public/logos/{brand-id}/
+  {brand-id}-logo-light.png
+  {brand-id}-logo-dark.png
+  {brand-id}-brandmark-light.png
+  …
+```
+
+Example: `public/logos/zip/zip-logo-light.png`.
+
+See also [`public/logos/README.md`](public/logos/README.md). Missing files show a placeholder until you add them.
+
+---
+
+## Build & GitHub Pages
+
+The live site is **static and read-only** (no colour editing).
+
+```bash
+npm run build
+```
+
+This writes a static site to `dist/`:
+
+- copies `public/`
+- copies `data/brands.json` → `dist/data/brands.json`
+- writes `dist/config.js` with `{ static: true, basePath }`
+
+`BASE_PATH` defaults to `/zip-brand-asset-manager` (project Pages URL). Override if your repo name differs:
+
+```bash
+BASE_PATH=/my-repo-name npm run build
+```
+
+### Enable Pages
+
+1. Push to `main` (workflow: [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml))
+2. In the repo: **Settings → Pages → Build and deployment → Source: GitHub Actions**
+3. After the workflow succeeds, the site is at `https://<user>.github.io/<repo>/`
+
+The workflow sets `BASE_PATH` from the repository name automatically.
 
 ---
 
 ## Project structure
 
 ```
-zip-brand/
-├── server.js          # Express server — static files + API
-├── data/
-│   ├── brands.json    # Colour data (edited via the UI)
-│   └── profiles/      # Source ICC profiles (not served directly)
-└── public/
-    ├── index.html
-    ├── main.js
-    ├── style.css
-    ├── profiles/      # ICC profiles served statically
-    │   ├── CoatedFOGRA39.icc
-    │   └── USWebCoatedSWOP.icc
-    └── vendor/
-        └── jsColorEngineWeb.js
+zip-brand-asset-manager/
+├── server.js                      # Express — local API + static files
+├── scripts/build.js               # Static export for GitHub Pages
+├── data/brands.json               # Source of truth
+├── public/
+│   ├── index.html
+│   ├── main.js
+│   ├── config.js                  # Local: { static: false }
+│   ├── style.css                  # Imports styles/* (type.css first)
+│   ├── styles/
+│   │   ├── type.css               # Typekit + --font-family-* variables
+│   │   ├── base.css               # Tokens, spacers, mode visibility
+│   │   ├── layout.css             # Shell, sidebar, header
+│   │   ├── colors.css             # Colour cards, CMYK, scales
+│   │   └── sections.css           # Typography, logos, pairings
+│   ├── logos/{brand-id}/
+│   ├── profiles/                  # ICC profiles for CMYK (Designer)
+│   └── vendor/
+└── .github/workflows/deploy.yml
 ```
 
 ---
 
 ## ICC profiles & licences
 
-CMYK approximation uses [jsColorEngine](https://github.com/glennwilton/jsColorEngine) (Mozilla Public License 2.0) with two ICC profiles:
+CMYK approximation (Designer mode) uses [jsColorEngine](https://github.com/glennwilton/jsColorEngine) (Mozilla Public License 2.0) with:
 
-- **CoatedFOGRA39.icc** — ISO 12647-2 coated stock profile. Provided by VIGC with permission of X-Rite. May be used, embedded, exchanged, and shared without restriction.
+- **CoatedFOGRA39.icc** — ISO 12647-2 coated stock. Provided by VIGC with permission of X-Rite.
 - **USWebCoatedSWOP.icc** — US Web Coated SWOP v2. Distributed by Adobe Systems.
-
----
-
-## Hosting
-
-The app is a standard Node/Express server. To deploy it:
-
-1. Push the repository to your host of choice (Render, Railway, Fly.io, etc.)
-2. Set the `PORT` environment variable if required — the app defaults to `3001`
-3. Make sure `data/brands.json` is included or use persistent storage if the host has an ephemeral filesystem
 
 ---
 

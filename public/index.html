@@ -5,23 +5,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ZIP Brand Assets</title>
   <link rel="stylesheet" href="style.css">
+  <script src="config.js"></script>
 </head>
 <body>
-  <header>
-    <div class="header-top">
-      <div>
-        <h1>Colour palettes</h1>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="Brand navigation">
+      <div class="sidebar-top">
+        <div class="sidebar-brand">
+          <span class="sidebar-logo">ZIP</span>
+          <span class="sidebar-title">Brand Assets</span>
+        </div>
+        <button type="button" class="sidebar-close" id="sidebar-close" aria-label="Close navigation">×</button>
       </div>
-      <div class="profile-toggle" role="group" aria-label="CMYK profile">
-        <button class="profile-btn" data-profile="swop">SWOP v2</button>
-        <button class="profile-btn" data-profile="fogra39">FOGRA39</button>
+      <nav class="sidebar-nav" id="sidebar-nav"></nav>
+      <div class="sidebar-footer">
+        <div class="mode-switch" role="group" aria-label="Display mode">
+          <button type="button" class="mode-btn" data-mode="simple">Simple</button>
+          <button type="button" class="mode-btn" data-mode="designer">Designer</button>
+        </div>
+        <p class="mode-hint" id="mode-hint">Colours, fonts &amp; logos for everyday use</p>
       </div>
-    </div>
-  </header>
+    </aside>
 
-  <main id="brands-container">
-    <p class="loading">Loading…</p>
-  </main>
+    <div class="sidebar-backdrop" id="sidebar-backdrop" hidden></div>
+
+    <div class="content">
+      <header>
+        <div class="header-top">
+          <div class="header-left">
+            <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Open navigation">
+              <span></span><span></span><span></span>
+            </button>
+            <div>
+              <h1>Brand guide</h1>
+              <p class="subtitle">Colours, typography and logos for ZIP and sub-brands</p>
+            </div>
+          </div>
+          <div class="profile-toggle designer-only" role="group" aria-label="CMYK profile">
+            <button type="button" class="profile-btn" data-profile="swop">SWOP v2</button>
+            <button type="button" class="profile-btn" data-profile="fogra39">FOGRA39</button>
+          </div>
+        </div>
+      </header>
+
+      <main id="brands-container">
+        <p class="loading">Loading…</p>
+      </main>
+    </div>
+  </div>
 
   <!-- Add colour modal -->
   <dialog id="color-modal">
@@ -67,7 +98,7 @@
     </form>
   </dialog>
 
-  <script src="/vendor/jsColorEngineWeb.js"></script>
+  <script src="vendor/jsColorEngineWeb.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
