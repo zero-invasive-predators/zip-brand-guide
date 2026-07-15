@@ -721,7 +721,7 @@ function renderPairings(brand) {
 
   return `
     <section class="brand-section" id="brand-${brand.id}-pairings">
-      <h3 class="section-heading">Acceptable pairings</h3>
+      <h3 class="section-heading">Acceptable colour pairings</h3>
       <div class="pairings-grid">${chips}</div>
       ${blurb}
     </section>`;
