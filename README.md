@@ -8,12 +8,12 @@ Use it locally as a designer tool (edit colours, CMYK, contrast, tints), or depl
 
 ## Brands
 
-| Abbreviation | Full name | Folder / id |
-|---|---|---|
-| ZIP | Zero Invasive Predators | `zip` |
-| PFSW | Predator Free South Westland | `pfsw` |
-| TMAP | Te Manahuna Aoraki Project | `tmap` |
-| PFR | Predator Free Rakiura | `pfr` |
+| Abbreviation | Full name                    | Folder / id |
+| ------------ | ---------------------------- | ----------- |
+| ZIP          | Zero Invasive Predators      | `zip`       |
+| PFSW         | Predator Free South Westland | `pfsw`      |
+| TMAP         | Te Manahuna Aoraki Project   | `tmap`      |
+| PFR          | Predator Free Rakiura        | `pfr`       |
 
 ---
 
@@ -78,17 +78,13 @@ Each brand in `data/brands.json` looks like:
         "google": null,
         "cssVar": "--font-family-proxima-nova",
         "fallback": "Arial, sans-serif",
-        "weights": [
-          { "display": 700, "visual": "Bold" }
-        ]
+        "weights": [{ "display": 700, "visual": "Bold" }]
       },
       "fallback": {
         "name": "Aptos Display",
         "cssVar": "--font-family-aptos-display",
         "fallback": "Arial, sans-serif",
-        "weights": [
-          { "display": 700, "visual": "Bold" }
-        ]
+        "weights": [{ "display": 700, "visual": "Bold" }]
       }
     }
   ],
@@ -118,9 +114,9 @@ Each brand in `data/brands.json` looks like:
 
 Each entry in `fonts` is one **role** (e.g. Headings, Body) with a shared `sample` string and two faces:
 
-| Field | Purpose |
-|---|---|
-| `ideal` | Brand font for Adobe, Canva, Squarespace, etc. |
+| Field      | Purpose                                                                   |
+| ---------- | ------------------------------------------------------------------------- |
+| `ideal`    | Brand font for Adobe, Canva, Squarespace, etc.                            |
 | `fallback` | Office / Microsoft-facing alternative when the brand font isn’t available |
 
 Shown as a 2-column grid: **Brand fonts (where available)** | **Fallback fonts (for Microsoft apps, or where not available)**.
@@ -153,12 +149,12 @@ Add Typekit kits and family variables in `public/styles/type.css` (imported firs
 
 ### Logos
 
-`logos` is an array of assets. Each entry has: 
+`logos` is an array of assets. Each entry has:
 
-| Field | Purpose |
-|---|---|
-| `name` | Label under the preview (e.g. `"Tohu • Any background"`) |
-| `file` | Path under `public/` (e.g. `"logos/zip/zip-logo-light.png"`) |
+| Field        | Purpose                                                        |
+| ------------ | -------------------------------------------------------------- |
+| `name`       | Label under the preview (e.g. `"Tohu • Any background"`)       |
+| `file`       | Path under `public/` (e.g. `"logos/zip/zip-logo-light.png"`)   |
 | `background` | Preview chrome: `"light"`, `"dark"`, or `"any"` (checkerboard) |
 
 Drop PNGs into brand folders. Filenames are usually prefixed with the brand id:

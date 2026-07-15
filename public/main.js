@@ -715,7 +715,7 @@ function renderPairings(brand) {
     : '<p class="empty-state">No AA pairings in this palette</p>';
 
   const defaultBlurb =
-    "Make sure you use the above combinations for any text and background combinations. This helps make sure that all text is readbable and accessible to all.";
+    "Make sure you use the above combinations for any text and background combinations. This helps make sure that all text is readable and accessible to all.";
   const blurbText = brand.usage?.pairings || defaultBlurb;
   const blurb = `<p class="usage-blurb">${formatUsageNote(blurbText)}</p>`;
 
